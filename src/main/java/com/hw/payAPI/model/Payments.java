@@ -1,12 +1,14 @@
 package com.hw.payAPI.model;
 
 import lombok.Data;
+import org.springframework.stereotype.Repository;
 
 @Data
 public class Payments {
     private int id;
-    private String payStr;
     private String unique_id;
+    private String payStr;
+
 
     public int getId() {
         return id;

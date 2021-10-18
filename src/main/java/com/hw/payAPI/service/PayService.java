@@ -3,27 +3,39 @@ package com.hw.payAPI.service;
 import com.hw.payAPI.dto.PayInfoDTO;
 import com.hw.payAPI.mapper.PayMapper;
 import com.hw.payAPI.model.Payments;
-import javafx.scene.input.DataFormat;
+import com.hw.payAPI.util.AES256Util;
+import org.apache.commons.codec.EncoderException;
+import org.apache.commons.codec.net.URLCodec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 
 @Service
 public class PayService {
-
     private static int keyCount = 0;
+    private static String key = "aes256-testingKey";
+    private String encStr = "";
 
     @Autowired
     private PayMapper payMapper;
 
     @Transactional
-    public void savePayStr(PayInfoDTO payInfoDTO) {
+    public String savePayStr(PayInfoDTO payInfoDTO) throws UnsupportedEncodingException,
+            InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException,
+            NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, EncoderException {
 
         Payments payments = new Payments();
 
@@ -37,7 +49,7 @@ public class PayService {
         Locale country = new Locale("KOREAN", "KOREA");
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss", country);
         keyCount++;
-        String headerUniqueID = df.format(new Date()) + "pay" + String.format("%03d", keyCount);
+        String headerUniqueID = "pay" + df.format(new Date()) +  String.format("%03d", keyCount);
 
 
         String cardNum = String.format("%-20s", payInfoDTO.getCardNum()); //20 left
@@ -49,9 +61,27 @@ public class PayService {
 
 
         String spaces = String.format("%-20s", " "); //원거래관리번호 (결제시 공백) left 20 space
-        String encrypted = String.format("%300s",  " "); // encrypted left 300 space
+
+        AES256Util aes256 = new AES256Util(key);
+        URLCodec codec = new URLCodec();
+
+        String concatInfo = cardNum + "|" + validDate + "|" + cvc;
+        encStr = codec.encode(aes256.aesEncode(concatInfo));
+        String encrypted = String.format("%300s",  encStr); // encrypted left 300 space
+
         String reserveField = String.format("%47s", " "); //47
 
-        payMapper.savePayStr(payments);
+        String total = headerChar + headerUniqueID +
+                cardNum + installments + validDate + cvc + cost + tax +
+                spaces + encrypted + reserveField;
+
+        headerLength = String.format("%4d" , total.length());
+
+        total = headerLength + total;
+        payments.setPayStr(total);
+        payments.setUnique_id(headerUniqueID);
+
+        payMapper.savePayStr(headerUniqueID, total);
+        return headerUniqueID;
     }
 }
