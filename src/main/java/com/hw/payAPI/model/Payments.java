@@ -1,5 +1,8 @@
 package com.hw.payAPI.model;
 
+import lombok.Data;
+
+@Data
 public class Payments {
     private String id;
     private String payStr;
