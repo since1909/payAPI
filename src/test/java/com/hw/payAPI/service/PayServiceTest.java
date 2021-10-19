@@ -1,8 +1,10 @@
 package com.hw.payAPI.service;
 
+import com.hw.payAPI.dto.CancelInfoDTO;
 import com.hw.payAPI.dto.PayInfoDTO;
 import com.hw.payAPI.mapper.PayMapper;
 import com.hw.payAPI.model.Payments;
+import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -46,7 +48,7 @@ class PayServiceTest {
 
     @Test
     void savePayStr() throws EncoderException, InvalidAlgorithmParameterException, UnsupportedEncodingException,
-            NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
+            NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, DecoderException {
         //given (tax is not null)
         PayInfoDTO testDTO = new PayInfoDTO();
 
@@ -80,7 +82,14 @@ class PayServiceTest {
         payTestData = payTestService.makeStr(testDTO);
         //then
         Assertions.assertEquals("0000010000", payStr.substring(73, 83));
-
-
     }
+
+//    @Test
+//    public void saveCancel() {
+//        Payments payDta = new Payments();
+//        payDta.setUnique_id("pay20211019134619001");
+//        payDta.
+//
+//        Payments cancelData = payTestService.makeCancelStr(cancelInfoDTO);
+//    }
 }

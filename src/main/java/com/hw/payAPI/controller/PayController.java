@@ -2,7 +2,9 @@ package com.hw.payAPI.controller;
 
 import com.hw.payAPI.dto.CancelInfoDTO;
 import com.hw.payAPI.dto.PayInfoDTO;
+import com.hw.payAPI.service.CancelService;
 import com.hw.payAPI.service.PayService;
+import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,17 +27,20 @@ import java.security.NoSuchAlgorithmException;
 public class PayController {
     @Autowired
     private PayService payService;
+    @Autowired
+    private CancelService cancelService;
 
     @PostMapping("/payment")
     public String insertPayStr(@RequestBody PayInfoDTO payInfoDTO) throws EncoderException, InvalidAlgorithmParameterException,
             UnsupportedEncodingException, NoSuchPaddingException, IllegalBlockSizeException,
-            NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
+            NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, DecoderException {
        return payService.savePayStr(payInfoDTO);
     }
 
     @PostMapping("/cancel")
     public String insertCancel(@RequestBody CancelInfoDTO cancelInfoDTO) {
-        return payService.saveCancel(cancelInfoDTO);
+        System.out.println(cancelInfoDTO.getUnique_id());
+        return cancelService.saveCancel(cancelInfoDTO);
     }
 
     @GetMapping("/payment/{uid}")

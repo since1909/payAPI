@@ -5,21 +5,17 @@ import com.hw.payAPI.dto.PayInfoDTO;
 import com.hw.payAPI.mapper.PayMapper;
 import com.hw.payAPI.model.Payments;
 import com.hw.payAPI.util.AES256Util;
+import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.net.URLCodec;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import java.io.UnsupportedEncodingException;
-import java.net.URL;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -39,7 +35,7 @@ public class PayService {
 
     public Payments makeStr(PayInfoDTO payInfoDTO) throws UnsupportedEncodingException,
             InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException,
-            NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, EncoderException {
+            NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, EncoderException, DecoderException {
         Payments payments = new Payments();
 
         //HEADER 설정
@@ -76,6 +72,9 @@ public class PayService {
 
         String concatInfo = cardNum + "|" + validDate + "|" + cvc;
         encStr = codec.encode(aes256.aesEncode(concatInfo));
+        //String decStr = aes256.aesDecode(codec.decode(encStr));
+        //System.out.println(decStr);
+
         String encrypted = String.format("%300s",  encStr); // encrypted left 300 space
 
         String reserveField = String.format("%47s", " "); //47
@@ -92,19 +91,18 @@ public class PayService {
         return payments;
     }
 
+
+
     @Transactional
     public String savePayStr(PayInfoDTO payInfoDTO) throws EncoderException, InvalidAlgorithmParameterException,
             UnsupportedEncodingException, NoSuchPaddingException, IllegalBlockSizeException,
-            NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
+            NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, DecoderException {
         Payments payData = makeStr(payInfoDTO);
         payMapper.savePayStr(payData.getUnique_id(), payData.getPayStr());
         return payData.getUnique_id();
     }
 
-    @Transactional
-    public String saveCancel(CancelInfoDTO cancelInfoDTO) {
-        return "";
-    }
+
 
     @Transactional
     public String getPayStr(String uid){

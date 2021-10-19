@@ -5,6 +5,18 @@
     </insert>
 
     <select id="getPayInfo" resultType="com.hw.payAPI.model.Payments">
-        SELECT * FROM payments WHERE unique_id = #{unique_id}
+        SELECT * FROM payments
+        WHERE unique_id = #{unique_id}
+        LIMIT 1
     </select>
+
+    <select id="getCancelAll" resultType="java.util.List">
+        SELECT * FROM cancels
+        WHERE origin_id = #{originid}
+    </select>
+
+    <insert id="saveCancel" parameterType="com.hw.payAPI.model.Cancels">
+        INSERT INTO cancels
+        VALUES (#{canceldata.unique_id}, #{canceldata.cancelstr}, #{canceldata.origin_id}, #{canceldata.cost}, #{canceldata.tax})
+    </insert>
 </mapper>
