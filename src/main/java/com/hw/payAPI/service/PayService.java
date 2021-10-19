@@ -7,9 +7,13 @@ import com.hw.payAPI.util.AES256Util;
 import org.apache.commons.codec.EncoderException;
 import org.apache.commons.codec.net.URLCodec;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
@@ -32,11 +36,9 @@ public class PayService {
     @Autowired
     private PayMapper payMapper;
 
-    @Transactional
-    public String savePayStr(PayInfoDTO payInfoDTO) throws UnsupportedEncodingException,
+    public Payments makeStr(PayInfoDTO payInfoDTO) throws UnsupportedEncodingException,
             InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException,
             NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, EncoderException {
-
         Payments payments = new Payments();
 
         //HEADER 설정
@@ -57,8 +59,14 @@ public class PayService {
         String validDate = payInfoDTO.getValidDate(); //4
         String cvc = payInfoDTO.getCvc(); //3
         String cost = String.format("%10s", payInfoDTO.getCost()); //10 right space
-        String tax = String.format("%010d", Integer.parseInt(payInfoDTO.getTax())); // 10 right 0
 
+        String tax = payInfoDTO.getTax().orElse("");
+        if(tax.equals("")) {
+            double taxCal= Math.round(Double.parseDouble(payInfoDTO.getCost()) / 11);
+            tax = String.format("%010d", (int)taxCal);
+        } else {
+            tax = String.format("%010d", Integer.parseInt(tax)); // 10 right 0
+        }
 
         String spaces = String.format("%-20s", " "); //원거래관리번호 (결제시 공백) left 20 space
 
@@ -80,8 +88,15 @@ public class PayService {
         total = headerLength + total;
         payments.setPayStr(total);
         payments.setUnique_id(headerUniqueID);
+        return payments;
+    }
 
-        payMapper.savePayStr(headerUniqueID, total);
-        return headerUniqueID;
+    @Transactional
+    public String savePayStr(PayInfoDTO payInfoDTO) throws EncoderException, InvalidAlgorithmParameterException,
+            UnsupportedEncodingException, NoSuchPaddingException, IllegalBlockSizeException,
+            NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
+        Payments payData = makeStr(payInfoDTO);
+        payMapper.savePayStr(payData.getUnique_id(), payData.getPayStr());
+        return payData.getUnique_id();
     }
 }
