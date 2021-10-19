@@ -3,4 +3,8 @@
     <insert id="savePayStr">
         INSERT INTO payments(unique_id, payStr) VALUES (#{unique_id}, #{payStr})
     </insert>
+
+    <select id="getPayInfo" resultType="com.hw.payAPI.model.Payments">
+        SELECT * FROM payments WHERE unique_id = #{unique_id}
+    </select>
 </mapper>

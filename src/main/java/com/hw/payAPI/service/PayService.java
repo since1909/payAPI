@@ -1,5 +1,6 @@
 package com.hw.payAPI.service;
 
+import com.hw.payAPI.dto.CancelInfoDTO;
 import com.hw.payAPI.dto.PayInfoDTO;
 import com.hw.payAPI.mapper.PayMapper;
 import com.hw.payAPI.model.Payments;
@@ -98,5 +99,17 @@ public class PayService {
         Payments payData = makeStr(payInfoDTO);
         payMapper.savePayStr(payData.getUnique_id(), payData.getPayStr());
         return payData.getUnique_id();
+    }
+
+    @Transactional
+    public String saveCancel(CancelInfoDTO cancelInfoDTO) {
+        return "";
+    }
+
+    @Transactional
+    public String getPayStr(String uid){
+        Payments payInfo = payMapper.getPayInfo(uid);
+        System.out.println(payInfo.getPayStr().substring(63, 73));
+        return payInfo.getUnique_id();
     }
 }
