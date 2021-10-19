@@ -2,6 +2,7 @@ package com.hw.payAPI.controller;
 
 import com.hw.payAPI.dto.CancelInfoDTO;
 import com.hw.payAPI.dto.PayInfoDTO;
+import com.hw.payAPI.exception.ExceedCancelPayException;
 import com.hw.payAPI.service.CancelService;
 import com.hw.payAPI.service.PayService;
 import org.apache.commons.codec.DecoderException;
@@ -39,8 +40,14 @@ public class PayController {
 
     @PostMapping("/cancel")
     public String insertCancel(@RequestBody CancelInfoDTO cancelInfoDTO) {
-        System.out.println(cancelInfoDTO.getUnique_id());
-        return cancelService.saveCancel(cancelInfoDTO);
+        try{
+            return cancelService.saveCancel(cancelInfoDTO);
+        } catch(ExceedCancelPayException e) {
+            return "ERROR!!!!!!";
+        } catch (Exception e){
+            return "결제취소오류";
+        }
+
     }
 
     @GetMapping("/payment/{uid}")

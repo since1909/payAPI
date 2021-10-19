@@ -3,7 +3,6 @@ package com.hw.payAPI.mapper;
 import com.hw.payAPI.dto.CancelInfoDTO;
 import com.hw.payAPI.model.Cancels;
 import com.hw.payAPI.model.Payments;
-import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -16,7 +15,8 @@ public interface PayMapper {
 
     Payments getPayInfo(@Param("unique_id") String unique_id);
 
-    List<Cancels> getCancelAll(@Param("originid") String unique_id);
+    int getCostSum(@Param("originid") String originid);
+    int getTaxSum(@Param("originid") String originid);
 
     int saveCancel(@Param("canceldata") Cancels cancelData);
 }

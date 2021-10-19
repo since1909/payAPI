@@ -10,9 +10,16 @@
         LIMIT 1
     </select>
 
-    <select id="getCancelAll" resultType="java.util.List">
-        SELECT * FROM cancels
+    <select id="getCostSum" resultType="int">
+        SELECT sum(cost) FROM cancels
         WHERE origin_id = #{originid}
+        GROUP BY origin_id
+    </select>
+
+    <select id="getTaxSum" resultType="int">
+        SELECT sum(tax) FROM cancels
+        WHERE origin_id = #{originid}
+        GROUP BY origin_id
     </select>
 
     <insert id="saveCancel" parameterType="com.hw.payAPI.model.Cancels">
