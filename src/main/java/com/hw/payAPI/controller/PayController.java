@@ -1,10 +1,12 @@
 package com.hw.payAPI.controller;
 
 import com.hw.payAPI.dto.CancelInfoDTO;
+import com.hw.payAPI.dto.GetInfoDTO;
 import com.hw.payAPI.dto.PayInfoDTO;
 import com.hw.payAPI.exception.CostOverException;
 import com.hw.payAPI.exception.TaxOverException;
 import com.hw.payAPI.service.CancelService;
+import com.hw.payAPI.service.GetInfoService;
 import com.hw.payAPI.service.PayService;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
@@ -29,6 +31,8 @@ public class PayController {
     private PayService payService;
     @Autowired
     private CancelService cancelService;
+    @Autowired
+    private GetInfoService getInfoService;
 
     @PostMapping("/payment")
     public String insertPayStr(@RequestBody PayInfoDTO payInfoDTO) throws EncoderException, InvalidAlgorithmParameterException,
@@ -53,7 +57,7 @@ public class PayController {
     }
 
     @GetMapping("/payment/{uid}")
-    public String getPayInfo(@PathVariable String uid) {
-        return payService.getPayStr(uid);
+    public GetInfoDTO getPayInfo(@PathVariable String uid) throws DecoderException, InvalidAlgorithmParameterException, UnsupportedEncodingException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
+        return getInfoService.getData(uid);
     }
 }

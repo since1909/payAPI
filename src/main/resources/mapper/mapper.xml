@@ -5,7 +5,12 @@
     </insert>
 
     <select id="getPayInfo" resultType="com.hw.payAPI.model.Payments">
-        SELECT * FROM payments
+        SELECT unique_id, paystr
+        FROM payments
+        WHERE unique_id = #{unique_id}
+        UNION
+        SELECT unique_id, cancelstr
+        FROM cancels
         WHERE unique_id = #{unique_id}
         LIMIT 1
     </select>
