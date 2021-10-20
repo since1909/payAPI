@@ -10,16 +10,14 @@
         LIMIT 1
     </select>
 
-    <select id="getCostSum" resultType="int">
-        SELECT sum(cost) FROM cancels
+    <select id="getCostSum" resultType="java.lang.Integer">
+        SELECT COALESCE(sum(cost), 0) FROM cancels
         WHERE origin_id = #{originid}
-        GROUP BY origin_id
     </select>
 
-    <select id="getTaxSum" resultType="int">
-        SELECT sum(tax) FROM cancels
+    <select id="getTaxSum" resultType="java.lang.Integer">
+        SELECT COALESCE(sum(tax), 0) FROM cancels
         WHERE origin_id = #{originid}
-        GROUP BY origin_id
     </select>
 
     <insert id="saveCancel" parameterType="com.hw.payAPI.model.Cancels">
