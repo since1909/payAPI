@@ -10,10 +10,8 @@ import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -24,9 +22,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 
-
 @SpringBootTest
-
 public class TestCase01 {
     @Autowired
     private PayService payService;

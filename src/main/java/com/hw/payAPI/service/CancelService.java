@@ -44,7 +44,6 @@ public class CancelService {
         //tax null 값인지 확인
         String cancelTax = cancelInfoDTO.getTax().orElse("");
         if (cancelTax.equals("")) {
-            //System.out.println("yes is null~~~~~~~~~~~~~~~~~~~~~~~~");
             //마지막 부분취소 (남은 금액 전체 취소이면)
             if (costSum + Integer.parseInt(cancelInfoDTO.getCost()) == originalCost) {
                 //부가가치세 계산하지 않고 남은 부가가치세 전부로 tax 설정
@@ -57,6 +56,10 @@ public class CancelService {
             cancelInfoDTO.setTax(Optional.of(cancelTax));
         } else {
             if (taxSum + Integer.parseInt(cancelTax) > originalTax) {
+                throw new TaxOverException("부과세를 초과한 취소 입니다.");
+            }
+            if (costSum + Integer.parseInt(cancelInfoDTO.getCost()) == originalCost
+                    && originalTax - taxSum != Integer.parseInt(cancelTax)) {
                 throw new TaxOverException("부과세를 초과한 취소 입니다.");
             }
             cancelTax = String.format("%010d", Integer.parseInt(cancelTax)); // 10 right 0
