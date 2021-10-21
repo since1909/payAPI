@@ -72,8 +72,6 @@ public class PayService {
 
         String concatInfo = cardNum + "|" + validDate + "|" + cvc;
         encStr = codec.encode(aes256.aesEncode(concatInfo));
-        //String decStr = aes256.aesDecode(codec.decode(encStr));
-        //System.out.println(decStr);
 
         String encrypted = String.format("%300s",  encStr); // encrypted left 300 space
 
