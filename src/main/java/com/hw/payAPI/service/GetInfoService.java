@@ -27,7 +27,7 @@ public class GetInfoService {
 
     public GetInfoDTO getData(String uid) throws DecoderException, UnsupportedEncodingException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
         Payments getInfo = payMapper.getPayInfo(uid);
-        System.out.println(getInfo.getPayStr());
+        //System.out.println(getInfo.getPayStr());
 
         GetInfoDTO responseData = new GetInfoDTO();
         String payInfo = getInfo.getPayStr();

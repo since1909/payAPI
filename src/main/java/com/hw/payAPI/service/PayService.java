@@ -102,12 +102,4 @@ public class PayService {
         return payData.getUnique_id();
     }
 
-
-
-    @Transactional
-    public String getPayStr(String uid){
-        Payments payInfo = payMapper.getPayInfo(uid);
-        System.out.println(payInfo.getPayStr().substring(63, 73));
-        return payInfo.getUnique_id();
-    }
 }

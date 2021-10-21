@@ -45,7 +45,7 @@ public class CancelServiceTest {
         Payments payInfo = new Payments();
         payInfo.setPayStr(" 446PAYMENT   pay202110181722530011234567890123456    001021123     110000000001000                                                                                                                                                                                                                                                                                lQUrO5X3EKg1B4A8rlN%2F2SCREEqTHoXsVmccQoD3Fn8%3D                                               ");
         payInfo.setUnique_id("pay20211018172253001");
-        given(payMapper.getPayInfo(cancelInfoDTO.getUnique_id())).willReturn(payInfo);
+        given(payMapper.getPayments(cancelInfoDTO.getUnique_id())).willReturn(payInfo);
 
         //when
         Cancels cancelData = cancelTestService.saveCancel(cancelInfoDTO);
@@ -70,7 +70,7 @@ public class CancelServiceTest {
         Assertions.assertEquals("     11000", cost);
         Assertions.assertEquals("0000001000", tax);
 
-        System.out.println(str);
+        //System.out.println(str);
     }
 
     @Test
@@ -84,7 +84,7 @@ public class CancelServiceTest {
         Payments payInfo = new Payments();
         payInfo.setPayStr(" 446PAYMENT   pay202110181722530011234567890123456    001021123     110000000001000                                                                                                                                                                                                                                                                                lQUrO5X3EKg1B4A8rlN%2F2SCREEqTHoXsVmccQoD3Fn8%3D                                               ");
         payInfo.setUnique_id("pay20211018172253001");
-        given(payMapper.getPayInfo(cancelInfoDTO.getUnique_id())).willReturn(payInfo);
+        given(payMapper.getPayments(cancelInfoDTO.getUnique_id())).willReturn(payInfo);
 
         //when
         Cancels cancelData = cancelTestService.saveCancel(cancelInfoDTO);

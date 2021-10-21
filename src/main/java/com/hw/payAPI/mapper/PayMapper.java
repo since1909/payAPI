@@ -16,6 +16,9 @@ public interface PayMapper {
 
     Payments getPayInfo(@Param("unique_id") String unique_id);
 
+    Payments getPayments(@Param("unique_id") String unique_id);
+
+
     int getCostSum(@Param("originid") String originid);
     int getTaxSum(@Param("originid") String originid);
 

@@ -46,9 +46,9 @@ public class PayController {
         try{
             return cancelService.saveCancel(cancelInfoDTO).getUnique_id();
         } catch(CostOverException e) {
-            return "결제 금액을 초과한 취소 입니다.";
+            return e.getMessage();
         } catch(TaxOverException e) {
-            return "부과세를 초과한 취소 입니다.";
+            return e.getMessage();
         } catch (Exception e){
             e.printStackTrace();
             return "결제취소오류";
@@ -57,7 +57,9 @@ public class PayController {
     }
 
     @GetMapping("/payment/{uid}")
-    public GetInfoDTO getPayInfo(@PathVariable String uid) throws DecoderException, InvalidAlgorithmParameterException, UnsupportedEncodingException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
+    public GetInfoDTO getPayInfo(@PathVariable String uid) throws DecoderException, InvalidAlgorithmParameterException,
+            UnsupportedEncodingException, NoSuchPaddingException, IllegalBlockSizeException,
+            NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
         return getInfoService.getData(uid);
     }
 }
