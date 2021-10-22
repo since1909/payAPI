@@ -15,6 +15,11 @@
         LIMIT 1
     </select>
 
+    <select id="getPayments" resultType="com.hw.payAPI.model.Payments">
+        SELECT * FROM payments
+        WHERE unique_id = #{unique_id}
+    </select>
+
     <select id="getCostSum" resultType="java.lang.Integer">
         SELECT COALESCE(sum(cost), 0) FROM cancels
         WHERE origin_id = #{originid}

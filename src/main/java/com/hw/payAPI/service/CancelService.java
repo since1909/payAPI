@@ -15,16 +15,17 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class CancelService {
+
     @Autowired
     private PayMapper payMapper;
 
     @Transactional
-    public Cancels saveCancel(CancelInfoDTO cancelInfoDTO) {
-        Payments payInfo = payMapper.getPayInfo(cancelInfoDTO.getUnique_id()); //원거래 데이터
-        //System.out.println(payInfo.getUnique_id());
+    public synchronized Cancels saveCancel(CancelInfoDTO cancelInfoDTO) {
+        Payments payInfo = payMapper.getPayments(cancelInfoDTO.getUnique_id()); //원거래 데이터
 
         //원 거래 금액, 부가가치세
         int originalCost = Integer.parseInt(payInfo.getPayStr().substring(63, 73).trim());
@@ -33,9 +34,11 @@ public class CancelService {
         int costSum = payMapper.getCostSum(cancelInfoDTO.getUnique_id());
         int taxSum = payMapper.getTaxSum(cancelInfoDTO.getUnique_id());
 
+        System.out.println((originalCost - costSum) + " " + (originalTax - taxSum));
+
         //금액이 over 되면 무조건 실패
         if (costSum + Integer.parseInt(cancelInfoDTO.getCost()) > originalCost) {
-            throw new CostOverException();
+            throw new CostOverException("결제 금액을 초과한 취소 입니다.");
         }
 
         //tax null 값인지 확인
@@ -52,12 +55,16 @@ public class CancelService {
             }
             cancelInfoDTO.setTax(Optional.of(cancelTax));
         } else {
+            if (taxSum + Integer.parseInt(cancelTax) > originalTax) {
+                throw new TaxOverException("부과세를 초과한 취소 입니다.");
+            }
+            if (costSum + Integer.parseInt(cancelInfoDTO.getCost()) == originalCost
+                    && originalTax - taxSum != Integer.parseInt(cancelTax)) {
+                throw new TaxOverException("부과세를 초과한 취소 입니다.");
+            }
             cancelTax = String.format("%010d", Integer.parseInt(cancelTax)); // 10 right 0
         }
 
-       if (taxSum + Integer.parseInt(cancelTax) > originalTax) {
-            throw new TaxOverException();
-       }
 
         Cancels data = makeCancelStr(cancelInfoDTO, payInfo);
         payMapper.saveCancel(data);
@@ -75,13 +82,16 @@ public class CancelService {
         String header = String.format("%-10s","CANCEL");
 
         Locale country = new Locale("KOREAN", "KOREA");
-        SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss", country);
-        String headerUniqueID = "pay" + df.format(new Date()) +  String.format("%03d", 001);
+        SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd", country);
 
-//        String sameStr = payInfo.getPayStr().substring(34, 63);
+        String randNine = "";
+        for(int i = 0; i < 9; i++){
+            randNine += Integer.toString(new Random().nextInt(9));
+        }
+
+        String headerUniqueID = "pay" + df.format(new Date()) +  randNine;
         String cardNum = payInfo.getPayStr().substring(34, 54);
         String installments = "00";
-
         String validDate = payInfo.getPayStr().substring(56, 60);
         String cvc = payInfo.getPayStr().substring(60, 63);
 
