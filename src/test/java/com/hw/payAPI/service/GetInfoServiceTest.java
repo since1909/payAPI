@@ -47,7 +47,7 @@ public class GetInfoServiceTest {
         GetInfoDTO getInfoDTO = getInfoService.getData(uid);
 
         //then
-        Assertions.assertEquals(getInfoDTO.getMaskedCardNum(), "1234567890123456");
+        Assertions.assertEquals(getInfoDTO.getMaskedCardNum(), "123456*******456");
         Assertions.assertEquals(getInfoDTO.getValidDate(), "1021");
         Assertions.assertEquals(getInfoDTO.getCvc(), "123");
     }
