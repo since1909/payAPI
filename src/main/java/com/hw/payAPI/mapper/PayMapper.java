@@ -5,6 +5,7 @@ import com.hw.payAPI.model.Cancels;
 import com.hw.payAPI.model.Payments;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +17,7 @@ public interface PayMapper {
 
     Payments getPayInfo(@Param("unique_id") String unique_id);
 
-    Payments getPayments(@Param("unique_id") String unique_id);
+    @Transactional Payments getPayments(@Param("unique_id") String unique_id);
 
 
     int getCostSum(@Param("originid") String originid);

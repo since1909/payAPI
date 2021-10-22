@@ -18,13 +18,12 @@ import java.util.Optional;
 
 @Service
 public class CancelService {
-    private static int keyNumber = 0;
 
     @Autowired
     private PayMapper payMapper;
 
     @Transactional
-    public Cancels saveCancel(CancelInfoDTO cancelInfoDTO) {
+    public synchronized Cancels saveCancel(CancelInfoDTO cancelInfoDTO) {
         Payments payInfo = payMapper.getPayments(cancelInfoDTO.getUnique_id()); //원거래 데이터
 
         //원 거래 금액, 부가가치세
@@ -83,7 +82,7 @@ public class CancelService {
 
         Locale country = new Locale("KOREAN", "KOREA");
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss", country);
-        String headerUniqueID = "pay" + df.format(new Date()) +  String.format("%03d", ++keyNumber);
+        String headerUniqueID = "pay" + df.format(new Date()) +  String.format("%03d", (int)(Math.random()*100));
 
         String cardNum = payInfo.getPayStr().substring(34, 54);
         String installments = "00";

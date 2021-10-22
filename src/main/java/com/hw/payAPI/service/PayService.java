@@ -26,7 +26,6 @@ import java.util.Locale;
 
 @Service
 public class PayService {
-    private static int keyCount = 0;
     private static String key = "aes256-testingKey";
     private String encStr = "";
 
@@ -47,8 +46,7 @@ public class PayService {
         //데이터 관리번호 문자 20 (현재 날짜 시간 (14) + pay (3) + 일련번호 (001)
         Locale country = new Locale("KOREAN", "KOREA");
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss", country);
-        keyCount++;
-        String headerUniqueID = "pay" + df.format(new Date()) +  String.format("%03d", keyCount);
+        String headerUniqueID = "pay" + df.format(new Date()) +  String.format("%03d", (int)(Math.random()*100));
 
 
         String cardNum = String.format("%-20s", payInfoDTO.getCardNum()); //20 left
