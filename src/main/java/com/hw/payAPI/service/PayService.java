@@ -22,6 +22,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Random;
 
 
 @Service
@@ -45,8 +46,14 @@ public class PayService {
         String headerChar = String.format("%-10s", "PAYMENT");
         //데이터 관리번호 문자 20 (현재 날짜 시간 (14) + pay (3) + 일련번호 (001)
         Locale country = new Locale("KOREAN", "KOREA");
-        SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss", country);
-        String headerUniqueID = "pay" + df.format(new Date()) +  String.format("%03d", (int)(Math.random()*100));
+        SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd", country);
+
+        String randNine = "";
+        for(int i = 0; i < 9; i++){
+            randNine += Integer.toString(new Random().nextInt(9));
+        }
+
+        String headerUniqueID = "pay" + df.format(new Date()) +  randNine;
 
 
         String cardNum = String.format("%-20s", payInfoDTO.getCardNum()); //20 left

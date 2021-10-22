@@ -58,6 +58,6 @@ public class ConcurrencyControlTest {
         }
         latch.await();
 
-        Assertions.assertEquals(payMapper.getCostSum(uniqueID), "9500");
+        Assertions.assertEquals(Integer.parseInt(payInfo.getCost()) - payMapper.getCostSum(uniqueID), 9500);
     }
 }

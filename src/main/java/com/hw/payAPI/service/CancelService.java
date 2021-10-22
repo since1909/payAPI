@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class CancelService {
@@ -81,9 +82,14 @@ public class CancelService {
         String header = String.format("%-10s","CANCEL");
 
         Locale country = new Locale("KOREAN", "KOREA");
-        SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss", country);
-        String headerUniqueID = "pay" + df.format(new Date()) +  String.format("%03d", (int)(Math.random()*100));
+        SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd", country);
 
+        String randNine = "";
+        for(int i = 0; i < 9; i++){
+            randNine += Integer.toString(new Random().nextInt(9));
+        }
+
+        String headerUniqueID = "pay" + df.format(new Date()) +  randNine;
         String cardNum = payInfo.getPayStr().substring(34, 54);
         String installments = "00";
         String validDate = payInfo.getPayStr().substring(56, 60);
