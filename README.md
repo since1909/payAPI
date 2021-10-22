@@ -154,7 +154,7 @@
 
 #### 데이터베이스 설계
 
-![image](https://user-images.githubusercontent.com/37170306/138400199-d7e84520-f7bf-4cc1-86f7-b013444f028f.png)
+![image](https://user-images.githubusercontent.com/37170306/138400445-a8da6263-a388-49f4-a169-8f64e398d77b.png)
 
 + payments 테이블
 
