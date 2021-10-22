@@ -1,16 +1,16 @@
 package com.hw.payAPI.model;
 
+import lombok.Data;
+import org.springframework.stereotype.Repository;
+
+@Data
 public class Payments {
-    private String id;
+    private int id;
+    private String unique_id;
     private String payStr;
 
-    public Payments(String id, String payStr){
-        super();
-        this.id = id;
-        this.payStr = payStr;
-    }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -18,11 +18,17 @@ public class Payments {
         return payStr;
     }
 
-    public void setId(String id) {
+    public String getUnique_id() {return unique_id; }
+
+    public void setId(int id) {
         this.id = id;
     }
 
     public void setPayStr(String payStr){
         this.payStr = payStr;
+    }
+
+    public void setUnique_id(String unique_id) {
+        this.unique_id = unique_id;
     }
 }
