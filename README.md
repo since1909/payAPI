@@ -154,10 +154,12 @@
 
 #### 데이터베이스 설계
 
+![image](https://user-images.githubusercontent.com/37170306/138400199-d7e84520-f7bf-4cc1-86f7-b013444f028f.png)
+
 + payments 테이블
 
 
-![image-20211022133734150](https://user-images.githubusercontent.com/37170306/138395867-36ce2baf-6f9c-4bb5-94b9-a08d3be06d8b.png)
+![image](https://user-images.githubusercontent.com/37170306/138400273-35c48f27-ccf5-4fe9-b174-19b8cbebd650.png)
 
 
 
@@ -169,7 +171,7 @@
 
   
 
-  ![image-20211022133836192](https://user-images.githubusercontent.com/37170306/138395839-23d0515b-9d20-461e-9286-c6921bef4855.png)
+![image](https://user-images.githubusercontent.com/37170306/138400327-3fa697c9-47b0-47ef-8b3e-d0ade5649779.png)
 
   
 
