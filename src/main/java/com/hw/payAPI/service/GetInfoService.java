@@ -38,7 +38,16 @@ public class GetInfoService {
 
         String[] decStr = aes256.aesDecode(codec.decode(encrypted)).split("\\|");
         responseData.setUid(getInfo.getUnique_id());
-        responseData.setMaskedCardNum(decStr[0].trim());
+
+        String cardNum = decStr[0].trim();
+        String firstSix = cardNum.substring(0, 6);
+        String endThree = cardNum.substring(cardNum.length()-3, cardNum.length());
+
+        String maskedCardNum = firstSix;
+        for(int i = 6; i < cardNum.length()-3; i++) maskedCardNum += "*";
+        maskedCardNum += endThree;
+
+        responseData.setMaskedCardNum(maskedCardNum);
         responseData.setValidDate(decStr[1]);
         responseData.setCvc(decStr[2]);
 
