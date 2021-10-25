@@ -1,6 +1,8 @@
 package com.hw.payAPI.service;
 
 import com.hw.payAPI.dto.PayInfoDTO;
+import com.hw.payAPI.exception.InvalidCostException;
+import com.hw.payAPI.exception.InvalidInstallmentsException;
 import com.hw.payAPI.mapper.PayMapper;
 import com.hw.payAPI.model.Payments;
 import com.hw.payAPI.util.AES256Util;
@@ -92,6 +94,12 @@ public class PayService {
             NoSuchPaddingException, IllegalBlockSizeException,
             NoSuchAlgorithmException, BadPaddingException,
             InvalidKeyException {
+
+        if(Integer.parseInt(payInfoDTO.getInstallments()) < 0 || Integer.parseInt(payInfoDTO.getInstallments()) > 12)
+            throw new InvalidInstallmentsException("할부는 12개월까지만 가능합니다.");
+        if(Integer.parseInt(payInfoDTO.getCost()) < 100 || Integer.parseInt(payInfoDTO.getCost()) > 1000000000)
+            throw new InvalidCostException("결제는 100원 이상 10억 이하만 가능합니다.");
+
         Payments payData = makeStr(payInfoDTO);
         payMapper.savePayStr(payData.getUnique_id(), payData.getPayStr());
         return payData.getUnique_id();
