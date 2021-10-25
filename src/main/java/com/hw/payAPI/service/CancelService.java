@@ -77,8 +77,6 @@ public class CancelService {
         Cancels cancelData = new Cancels();
 
         //취소 데이터 작성
-        //header 변경
-
         String header = String.format("%-10s","CANCEL");
 
         Locale country = new Locale("KOREAN", "KOREA");

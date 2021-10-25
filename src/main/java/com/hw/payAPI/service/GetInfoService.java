@@ -22,12 +22,14 @@ public class GetInfoService {
     @Autowired
     private PayMapper payMapper;
 
-    private static String key = "aes256-testingKey";
+    private static String key = "12345678912345678912345678912345";
 
 
-    public GetInfoDTO getData(String uid) throws DecoderException, UnsupportedEncodingException, InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
+    public GetInfoDTO getData(String uid) throws DecoderException, UnsupportedEncodingException,
+            InvalidAlgorithmParameterException, NoSuchPaddingException,
+            IllegalBlockSizeException, NoSuchAlgorithmException,
+            BadPaddingException, InvalidKeyException {
         Payments getInfo = payMapper.getPayInfo(uid);
-        //System.out.println(getInfo.getPayStr());
 
         GetInfoDTO responseData = new GetInfoDTO();
         String payInfo = getInfo.getPayStr();
@@ -35,7 +37,6 @@ public class GetInfoService {
 
         AES256Util aes256 = new AES256Util(key);
         URLCodec codec = new URLCodec();
-
         String[] decStr = aes256.aesDecode(codec.decode(encrypted)).split("\\|");
         responseData.setUid(getInfo.getUnique_id());
 
