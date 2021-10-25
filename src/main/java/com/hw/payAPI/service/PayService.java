@@ -72,7 +72,10 @@ public class PayService {
 
         String reserveField = String.format("%47s", " ");
 
-        String total = headerChar + headerUniqueID + cardNum + installments + validDate + cvc + cost + tax + spaces + encrypted + reserveField;
+        String total = headerChar + headerUniqueID
+                + cardNum + installments + validDate + cvc
+                + cost + tax
+                + spaces + encrypted + reserveField;
         headerLength = String.format("%4d" , total.length());
 
         total = headerLength + total;
