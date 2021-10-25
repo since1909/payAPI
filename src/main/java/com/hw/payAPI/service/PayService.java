@@ -1,6 +1,5 @@
 package com.hw.payAPI.service;
 
-import com.hw.payAPI.dto.CancelInfoDTO;
 import com.hw.payAPI.dto.PayInfoDTO;
 import com.hw.payAPI.mapper.PayMapper;
 import com.hw.payAPI.model.Payments;
@@ -27,65 +26,56 @@ import java.util.Random;
 
 @Service
 public class PayService {
-    private static String key = "aes256-testingKey";
-    private String encStr = "";
+    private static String key = "12345678912345678912345678912345";
 
     @Autowired
     private PayMapper payMapper;
 
     public Payments makeStr(PayInfoDTO payInfoDTO) throws UnsupportedEncodingException,
             InvalidAlgorithmParameterException, NoSuchPaddingException, IllegalBlockSizeException,
-            NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, EncoderException, DecoderException {
+            NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, EncoderException {
         Payments payments = new Payments();
 
-        //HEADER 설정
+        //============================================HEADER 설정====================================================
 
         //데이터 길이 숫자 4
         String headerLength = "";
+
         //데이터 구분 문자 10 left
         String headerChar = String.format("%-10s", "PAYMENT");
+
         //데이터 관리번호 문자 20 (현재 날짜 시간 (14) + pay (3) + 일련번호 (001)
         Locale country = new Locale("KOREAN", "KOREA");
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd", country);
-
         String randNine = "";
-        for(int i = 0; i < 9; i++){
-            randNine += Integer.toString(new Random().nextInt(9));
-        }
-
+        for(int i = 0; i < 9; i++) { randNine += Integer.toString(new Random().nextInt(9));}
         String headerUniqueID = "pay" + df.format(new Date()) +  randNine;
 
+        //============================================================================================================
 
-        String cardNum = String.format("%-20s", payInfoDTO.getCardNum()); //20 left
-        String installments = String.format("%02d", Integer.parseInt(payInfoDTO.getInstallments())); //2 right 0
-        String validDate = payInfoDTO.getValidDate(); //4
-        String cvc = payInfoDTO.getCvc(); //3
-        String cost = String.format("%10s", payInfoDTO.getCost()); //10 right space
-
+        String cardNum = String.format("%-20s", payInfoDTO.getCardNum());
+        String installments = String.format("%02d", Integer.parseInt(payInfoDTO.getInstallments()));
+        String validDate = payInfoDTO.getValidDate();
+        String cvc = payInfoDTO.getCvc();
+        String cost = String.format("%10s", payInfoDTO.getCost());
         String tax = payInfoDTO.getTax().orElse("");
         if(tax.equals("")) {
             double taxCal= Math.round(Double.parseDouble(payInfoDTO.getCost()) / 11);
             tax = String.format("%010d", (int)taxCal);
-        } else {
-            tax = String.format("%010d", Integer.parseInt(tax)); // 10 right 0
-        }
-
-        String spaces = String.format("%-20s", " "); //원거래관리번호 (결제시 공백) left 20 space
+        } else { tax = String.format("%010d", Integer.parseInt(tax));}
+        String spaces = String.format("%-20s", " ");
 
         AES256Util aes256 = new AES256Util(key);
         URLCodec codec = new URLCodec();
+        String encStr = codec.encode(aes256.aesEncode(cardNum + "|" + validDate + "|" + cvc));
+        String encrypted = String.format("%300s",  encStr);
 
-        String concatInfo = cardNum + "|" + validDate + "|" + cvc;
-        encStr = codec.encode(aes256.aesEncode(concatInfo));
+        String reserveField = String.format("%47s", " ");
 
-        String encrypted = String.format("%300s",  encStr); // encrypted left 300 space
-
-        String reserveField = String.format("%47s", " "); //47
-
-        String total = headerChar + headerUniqueID +
-                cardNum + installments + validDate + cvc + cost + tax +
-                spaces + encrypted + reserveField;
-
+        String total = headerChar + headerUniqueID
+                + cardNum + installments + validDate + cvc
+                + cost + tax
+                + spaces + encrypted + reserveField;
         headerLength = String.format("%4d" , total.length());
 
         total = headerLength + total;
@@ -97,9 +87,11 @@ public class PayService {
 
 
     @Transactional
-    public String savePayStr(PayInfoDTO payInfoDTO) throws EncoderException, InvalidAlgorithmParameterException,
-            UnsupportedEncodingException, NoSuchPaddingException, IllegalBlockSizeException,
-            NoSuchAlgorithmException, BadPaddingException, InvalidKeyException, DecoderException {
+    public String savePayStr(PayInfoDTO payInfoDTO) throws EncoderException,
+            InvalidAlgorithmParameterException, UnsupportedEncodingException,
+            NoSuchPaddingException, IllegalBlockSizeException,
+            NoSuchAlgorithmException, BadPaddingException,
+            InvalidKeyException {
         Payments payData = makeStr(payInfoDTO);
         payMapper.savePayStr(payData.getUnique_id(), payData.getPayStr());
         return payData.getUnique_id();
