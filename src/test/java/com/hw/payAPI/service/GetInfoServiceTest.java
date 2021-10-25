@@ -32,8 +32,9 @@ public class GetInfoServiceTest {
     private PayMapper payMapper;
 
     @Test
-    public void getDataTest() throws DecoderException, InvalidAlgorithmParameterException, UnsupportedEncodingException, NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
-
+    public void getDataTest() throws DecoderException, InvalidAlgorithmParameterException, UnsupportedEncodingException,
+            NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!암호화 key 변경됨 -> 삽입된 암호화 문자열 변경 후 test 실행!!!!!!!!!!!!!!!!!!!!!!!!!!!
         //given
         String uid = "pay20211018172253001";
 
