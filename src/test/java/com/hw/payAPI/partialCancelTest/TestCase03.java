@@ -21,7 +21,7 @@ public class TestCase03 {
     private CancelService cancelService;
 
     @Test
-    public void test02()throws Exception{
+    public void test03()throws Exception{
         PayInfoDTO payInfo = new PayInfoDTO();
         payInfo.setCardNum("1234567890123456");
         payInfo.setInstallments("0");

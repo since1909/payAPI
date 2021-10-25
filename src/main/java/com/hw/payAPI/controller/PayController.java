@@ -43,10 +43,7 @@ public class PayController {
     private GetInfoService getInfoService;
 
     @PostMapping("/payment")
-    public String insertPayStr(@Valid @RequestBody PayInfoDTO payInfoDTO,  BindingResult bindingResult) throws EncoderException, InvalidAlgorithmParameterException,
-            UnsupportedEncodingException, NoSuchPaddingException, IllegalBlockSizeException,
-            NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
-
+    public String insertPayStr(@Valid @RequestBody PayInfoDTO payInfoDTO,  BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             String errorMessage = "";
             List<ObjectError> list =  bindingResult.getAllErrors();
