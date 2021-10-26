@@ -10,9 +10,9 @@ public class CancelInfoDTO {
     @JsonProperty("uid")
     private String unique_id;
 
-    @JsonProperty("cost")
-    private String cost;
+    @JsonProperty("cancelCost")
+    private String cancelCost;
 
-    @JsonProperty("tax")
-    private Optional<String> tax;
+    @JsonProperty("cancelTax")
+    private Optional<String> cancelTax;
 }

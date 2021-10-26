@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.swing.text.html.Option;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -25,6 +24,7 @@ public class CancelService {
 
     @Transactional
     public synchronized Cancels saveCancel(CancelInfoDTO cancelInfoDTO) {
+        System.out.println(cancelInfoDTO);
         Payments payInfo = payMapper.getPayments(cancelInfoDTO.getUnique_id());
         int originalCost = Integer.parseInt(payInfo.getPayStr().substring(63, 73).trim());
         int originalTax = Integer.parseInt(payInfo.getPayStr().substring(73, 83));
@@ -33,29 +33,29 @@ public class CancelService {
         int taxSum = payMapper.getTaxSum(cancelInfoDTO.getUnique_id());
 
         //금액이 over 되면 실패
-        if (costSum + Integer.parseInt(cancelInfoDTO.getCost()) > originalCost) {
+        if (costSum + Integer.parseInt(cancelInfoDTO.getCancelCost()) > originalCost) {
             throw new CostOverException("결제 금액을 초과한 취소 입니다.");
         }
 
         //tax null 값인지 확인
-        String cancelTax = cancelInfoDTO.getTax().orElse("");
+        String cancelTax = cancelInfoDTO.getCancelTax().orElse("");
         if (cancelTax.equals("")) {
             //마지막 부분취소 (남은 금액 전체 취소이면)
-            if (costSum + Integer.parseInt(cancelInfoDTO.getCost()) == originalCost) {
+            if (costSum + Integer.parseInt(cancelInfoDTO.getCancelCost()) == originalCost) {
                 //부가가치세 계산하지 않고 남은 부가가치세 전부로 tax 설정
                 cancelTax = String.format("%010d", originalTax - taxSum);
             }
             else {
-                double taxCal = Math.round(Double.parseDouble(cancelInfoDTO.getCost()) / 11);
+                double taxCal = Math.round(Double.parseDouble(cancelInfoDTO.getCancelCost()) / 11);
                 cancelTax = String.format("%010d", (int) taxCal);
             }
-            cancelInfoDTO.setTax(Optional.of(cancelTax));
+            cancelInfoDTO.setCancelTax(Optional.of(cancelTax));
         }
         else {
             if (taxSum + Integer.parseInt(cancelTax) > originalTax) {
                 throw new TaxOverException("부과세를 초과한 취소 입니다.");
             }
-            if (costSum + Integer.parseInt(cancelInfoDTO.getCost()) == originalCost
+            if (costSum + Integer.parseInt(cancelInfoDTO.getCancelCost()) == originalCost
                     && originalTax - taxSum != Integer.parseInt(cancelTax)) {
                 throw new TaxOverException("부과세를 초과한 취소 입니다.");
             }
@@ -89,8 +89,8 @@ public class CancelService {
         String validDate = payInfo.getPayStr().substring(56, 60);
         String cvc = payInfo.getPayStr().substring(60, 63);
 
-        String cancelCost = String.format("%10s", cancelInfoDTO.getCost()); //10 right space
-        String cancelTax = String.format("%010d", Integer.parseInt(cancelInfoDTO.getTax().get()));
+        String cancelCost = String.format("%10s", cancelInfoDTO.getCancelCost()); //10 right space
+        String cancelTax = String.format("%010d", Integer.parseInt(cancelInfoDTO.getCancelTax().get()));
 
         String originid = payInfo.getUnique_id(); //원거래관리번호
 

@@ -14,6 +14,7 @@ import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -43,9 +44,8 @@ public class PayController {
     @Autowired
     private GetInfoService getInfoService;
 
-    //@PostMapping("/payment")
-    @ModelAttribute("/payment")
-    public String insertPayStr(@Valid @RequestBody PayInfoDTO payInfoDTO,  BindingResult bindingResult) {
+    @PostMapping("/payment")
+    public String insertPayStr(@Valid @ModelAttribute PayInfoDTO payInfoDTO,  BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             String errorMessage = "";
             List<ObjectError> list =  bindingResult.getAllErrors();
@@ -69,7 +69,7 @@ public class PayController {
     }
 
     @PostMapping("/cancel")
-    public String insertCancel(@RequestBody CancelInfoDTO cancelInfoDTO) {
+    public String insertCancel(@ModelAttribute CancelInfoDTO cancelInfoDTO) {
         try{
             return cancelService.saveCancel(cancelInfoDTO).getUnique_id();
         } catch(CostOverException e) {

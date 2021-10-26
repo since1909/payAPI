@@ -122,20 +122,20 @@
                         <h4 class="text-primary font-weight-bold">Cancel</h4>
                         <br>
                         <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
-                        <form id="cancelForm" data-sb-form-api-token="API_TOKEN">
+                        <form id="cancelForm" action='/cancel' method="post" data-sb-form-api-token="API_TOKEN">
                             <div class="mb-3">
-                                <label class="form-label text-primary font-weight-bold" for="payID">Pay ID</label>
-                                <input class="form-control" id="payID" type="text" placeholder="Pay ID" data-sb-validations="required" />
-                                <div class="invalid-feedback" data-sb-feedback="payID:required">Pay ID is required.</div>
+                                <label class="form-label text-primary font-weight-bold" for="unique_id">Pay ID</label>
+                                <input class="form-control" id="unique_id" name="unique_id" type="text" placeholder="Pay ID" data-sb-validations="required" />
+                                <div class="invalid-feedback" data-sb-feedback="unique_id:required">Pay ID is required.</div>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label text-primary font-weight-bold" for="cancelPrice">Cancel Price</label>
-                                <input class="form-control" id="cancelPrice" type="text" placeholder="Cancel Price" data-sb-validations="required" />
-                                <div class="invalid-feedback" data-sb-feedback="cancelPrice:required">Cancel Price is required.</div>
+                                <label class="form-label text-primary font-weight-bold" for="cancelCost">Cancel Price</label>
+                                <input class="form-control" id="cancelCost" name="cancelCost" type="text" placeholder="Cancel Price" data-sb-validations="required" />
+                                <div class="invalid-feedback" data-sb-feedback="cancelCost:required">Cancel Price is required.</div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label text-primary font-weight-bold" for="cancelTax">Cancel Tax</label>
-                                <input class="form-control" id="cancelTax" type="text" placeholder="Cancel Tax" data-sb-validations="required" />
+                                <input class="form-control" id="cancelTax" name="cancelTax" type="text" placeholder="Cancel Tax" data-sb-validations="required" />
                                 <div class="invalid-feedback" data-sb-feedback="cancelTax:required">Cancel Tax is required.</div>
                             </div>
                             <div class="d-none" id="submitCancelSuccessMessage">
