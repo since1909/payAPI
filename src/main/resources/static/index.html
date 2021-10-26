@@ -32,8 +32,8 @@
                     <ul class="navbar-nav ms-auto my-2 my-lg-0">
                         <li class="nav-item"><a class="nav-link" href="#payment">Payment</a></li>
                         <li class="nav-item"><a class="nav-link" href="#cancel">Cancel</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                        <!--<li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>-->
                     </ul>
                 </div>
             </div>
@@ -64,22 +64,22 @@
                         <form id="paymentForm" action='/payment' method="post" data-sb-form-api-token="API_TOKEN">
                             <div class="mb-3">
                                 <label class="form-label text-light font-weight-bold" for="cardNum">Card Number</label>
-                                <input class="form-control" id="cardNum" type="text" placeholder="Card Number" data-sb-validations="required" />
+                                <input class="form-control" id="cardNum" name="cardNum" type="text" placeholder="Card Number" data-sb-validations="required" />
                                 <div class="invalid-feedback text-light" data-sb-feedback="cardNum:required">Card Number is required.</div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label text-light font-weight-bold" for="validDate">Valid Date</label>
-                                <input class="form-control" id="validDate" type="text" placeholder="Valid Date" data-sb-validations="required" />
+                                <input class="form-control" id="validDate" name="validDate" type="text" placeholder="Valid Date" data-sb-validations="required" />
                                 <div class="invalid-feedback text-light" data-sb-feedback="validDate:required">Valid Date is required.</div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label text-light font-weight-bold" for="cvc">CVC Number</label>
-                                <input class="form-control" id="cvc" type="text" placeholder="CVC Number" data-sb-validations="required" />
+                                <input class="form-control" id="cvc" name="cvc" type="text" placeholder="CVC Number" data-sb-validations="required" />
                                 <div class="invalid-feedback text-light" data-sb-feedback="cvc:required">CVC Number is required.</div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label text-light font-weight-bold" for="installments">Installments</label>
-                                <select class="form-select" id="installments" aria-label="Installments">
+                                <select class="form-select" id="installments" name="installments" aria-label="Installments">
                                     <option value="0">0</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -97,12 +97,12 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label text-light font-weight-bold" for="cost">Cost</label>
-                                <input class="form-control" id="cost" type="text" placeholder="Cost" data-sb-validations="required" />
+                                <input class="form-control" id="cost" name="cost" type="text" placeholder="Cost" data-sb-validations="required" />
                                 <div class="invalid-feedback text-light" data-sb-feedback="cost:required">Cost is required.</div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label text-light font-weight-bold" for="tax">Tax</label>
-                                <input class="form-control" id="tax" type="text" placeholder="Tax" data-sb-validations="" />
+                                <input class="form-control" id="tax" name="tax" type="text" placeholder="Tax" data-sb-validations="" />
                             </div>
                             <br>
                             <div class="d-grid">
@@ -157,68 +157,6 @@
                 </div>
             </div>
         </section>
-        <!-- Portfolio
-        <div id="portfolio">
-            <div class="container-fluid p-0">
-                <div class="row g-0">
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/1.jpg" title="Project Name">
-                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/1.jpg" alt="..." />
-                            <div class="portfolio-box-caption">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/2.jpg" title="Project Name">
-                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/2.jpg" alt="..." />
-                            <div class="portfolio-box-caption">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/3.jpg" title="Project Name">
-                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/3.jpg" alt="..." />
-                            <div class="portfolio-box-caption">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/4.jpg" title="Project Name">
-                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/4.jpg" alt="..." />
-                            <div class="portfolio-box-caption">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/5.jpg" title="Project Name">
-                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/5.jpg" alt="..." />
-                            <div class="portfolio-box-caption">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/6.jpg" title="Project Name">
-                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/6.jpg" alt="..." />
-                            <div class="portfolio-box-caption p-3">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        -->
         <!-- Call to action-->
         <section class="page-section bg-dark text-white">
             <div class="container px-4 px-lg-5 text-center">

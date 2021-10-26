@@ -29,6 +29,7 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.validation.Valid;
+import java.beans.MethodDescriptor;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -44,8 +45,8 @@ public class PayController {
     @Autowired
     private GetInfoService getInfoService;
 
-    @PostMapping("/payment")
-    public String insertPayStr(@Valid @ModelAttribute PayInfoDTO payInfoDTO,  BindingResult bindingResult) {
+    @PostMapping(value = "/payment", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public String insertPayStrJsonReq(@Valid @RequestBody PayInfoDTO payInfoDTO,  BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             String errorMessage = "";
             List<ObjectError> list =  bindingResult.getAllErrors();
@@ -68,8 +69,48 @@ public class PayController {
         }
     }
 
-    @PostMapping("/cancel")
-    public String insertCancel(@ModelAttribute CancelInfoDTO cancelInfoDTO) {
+
+    @PostMapping(value = "/payment", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String insertPayStrFormReq(@Valid @ModelAttribute PayInfoDTO payInfoDTO,  BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            String errorMessage = "";
+            List<ObjectError> list =  bindingResult.getAllErrors();
+            for(ObjectError e : list) {
+                errorMessage += e.getDefaultMessage();
+                errorMessage += "\n";
+                System.out.println(e.getDefaultMessage());
+            }
+            return errorMessage;
+        }
+
+        try {
+            return payService.savePayStr(payInfoDTO);
+        } catch (InvalidCostException e) {
+            return e.getMessage();
+        } catch (InvalidInstallmentsException e) {
+            return e.getMessage();
+        } catch (Exception e) {
+            return "결제 승인 오류 : 결제 데이터를 확인하세요.";
+        }
+    }
+
+    @PostMapping(value = "/cancel", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public String insertCancelJsonReq(@RequestBody CancelInfoDTO cancelInfoDTO) {
+        try{
+            return cancelService.saveCancel(cancelInfoDTO).getUnique_id();
+        } catch(CostOverException e) {
+            return e.getMessage();
+        } catch(TaxOverException e) {
+            return e.getMessage();
+        } catch (Exception e){
+            e.printStackTrace();
+            return "결제취소오류";
+        }
+
+    }
+
+    @PostMapping(value = "/cancel", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String insertCancelFormReq(@ModelAttribute CancelInfoDTO cancelInfoDTO) {
         try{
             return cancelService.saveCancel(cancelInfoDTO).getUnique_id();
         } catch(CostOverException e) {
