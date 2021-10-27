@@ -10,6 +10,7 @@ import com.hw.payAPI.exception.TaxOverException;
 import com.hw.payAPI.service.CancelService;
 import com.hw.payAPI.service.GetInfoService;
 import com.hw.payAPI.service.PayService;
+import com.hw.payAPI.util.ScriptUtil;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.EncoderException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +25,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.swing.*;
 import javax.validation.Valid;
 import java.beans.MethodDescriptor;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -71,26 +78,33 @@ public class PayController {
 
 
     @PostMapping(value = "/payment", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String insertPayStrFormReq(@Valid @ModelAttribute PayInfoDTO payInfoDTO,  BindingResult bindingResult) {
+    public void insertPayStrFormReq(@Valid @ModelAttribute PayInfoDTO payInfoDTO,  BindingResult bindingResult, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html; charset=euc-kr");
+
         if (bindingResult.hasErrors()) {
             String errorMessage = "";
             List<ObjectError> list =  bindingResult.getAllErrors();
             for(ObjectError e : list) {
                 errorMessage += e.getDefaultMessage();
-                errorMessage += "\n";
-                System.out.println(e.getDefaultMessage());
+                errorMessage += "\\r\\n";
             }
-            return errorMessage;
+            ScriptUtil.alertAndBackPage(response, errorMessage);
+            return;
         }
 
         try {
-            return payService.savePayStr(payInfoDTO);
+            String uid = payService.savePayStr(payInfoDTO);
+            ScriptUtil.alertAndBackPage(response, "[결제 승인] 결제가 정상적으로 완료되었습니다!\\r\\n(ID : " + uid + ")");
+            return;
         } catch (InvalidCostException e) {
-            return e.getMessage();
+           ScriptUtil.alertAndBackPage(response, "[Error] " + e.getMessage());
+            return;
         } catch (InvalidInstallmentsException e) {
-            return e.getMessage();
+            ScriptUtil.alertAndBackPage(response, "[Error] " + e.getMessage());
+            return;
         } catch (Exception e) {
-            return "결제 승인 오류 : 결제 데이터를 확인하세요.";
+            ScriptUtil.alertAndBackPage(response,"[Error] 결제 데이터를 확인하세요.");
+            return;
         }
     }
 
