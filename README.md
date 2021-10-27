@@ -28,6 +28,14 @@
 + 결제/취소 정보 조회
 
   
+테스트 페이지  
+
+<p align="left">
+<img src="https://user-images.githubusercontent.com/37170306/139022241-903269c2-21bf-4472-824d-0f9d29c02eb9.png" width="200"/>
+<img src="https://user-images.githubusercontent.com/37170306/139022304-f814db46-a23e-4835-9ab7-f6e27ceba0b5.png" width="250"/>
+<img src="https://user-images.githubusercontent.com/37170306/139022023-3773fe41-f464-48bb-856c-47ae43e251ff.png" width="250"/>
+</p>
+
 
 ### 빌드 및 실행방법
 
@@ -35,7 +43,9 @@
 
 1. **CLONE** master branch 
 
-2. **RUN** src/main/java/com/hw/payAPI/PayApiApplicaation.java 
+2. **RUN** src/main/java/com/hw/payAPI/PayApiApplicaation.java
+
+3. **http://{Server IP Address}:{Port Num}** 로 접속
 
 
 
