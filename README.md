@@ -34,10 +34,10 @@
   
 테스트 페이지  
 
-
+<p align="left">
 <img src="https://user-images.githubusercontent.com/37170306/139028385-03758aec-c514-4f37-b1f7-19655f4f42d9.png" width="500"/>
-<img src="https://user-images.githubusercontent.com/37170306/139022241-903269c2-21bf-4472-824d-0f9d29c02eb9.png" width="400"/>
-
+<img src="https://user-images.githubusercontent.com/37170306/139022241-903269c2-21bf-4472-824d-0f9d29c02eb9.png" width="350"/>
+</p>
 
 
 ### 빌드 및 실행방법
