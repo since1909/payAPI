@@ -12,6 +12,10 @@
 
 + PostgreSQL
 
++ Bootstrap
+
++ jQuery
+
   
 
 ### 프로젝트 구성
@@ -31,9 +35,9 @@
 테스트 페이지  
 
 <p align="left">
-<img src="https://user-images.githubusercontent.com/37170306/139022241-903269c2-21bf-4472-824d-0f9d29c02eb9.png" width="200"/>
-<img src="https://user-images.githubusercontent.com/37170306/139022304-f814db46-a23e-4835-9ab7-f6e27ceba0b5.png" width="250"/>
-<img src="https://user-images.githubusercontent.com/37170306/139022023-3773fe41-f464-48bb-856c-47ae43e251ff.png" width="250"/>
+<img src="https://user-images.githubusercontent.com/37170306/139022241-903269c2-21bf-4472-824d-0f9d29c02eb9.png" width="300"/>
+<img src="https://user-images.githubusercontent.com/37170306/139022304-f814db46-a23e-4835-9ab7-f6e27ceba0b5.png" width="350"/>
+<img src="https://user-images.githubusercontent.com/37170306/139022023-3773fe41-f464-48bb-856c-47ae43e251ff.png" width="350"/>
 </p>
 
 
@@ -108,7 +112,7 @@
 
   
 
-  **결제 승인 번호(uid)**는 결제 승인 완료 시 반환되는 ID 로 취소 하고자 하는 결제 건의 ID 를 입력합니다.
+  **결제 승인 번호(uid)** 는 결제 승인 완료 시 반환되는 ID 로 취소 하고자 하는 결제 건의 ID 를 입력합니다.
 
   **부가가치세** 정보는 **null** (정보 없음) 일 수 있습니다. 경우에 따라 *"tax" : null* 을 기입하면 결제 금액에 따른 부가가치세를 자동으로 계산하여 결제를 취소 합니다.
 
@@ -130,7 +134,7 @@
 
   
 
-  **결제 승인 번호(uid)**는 결제 및 취소 승인 반환되는 ID 입니다.
+  **결제 승인 번호(uid)** 는 결제 및 취소 승인 반환되는 ID 입니다.
 
   
 
@@ -211,20 +215,3 @@
 
 데이터베이스에 각각 저장된 **결제 정보**와 **취소 정보**를 JOIN 하여 입력받은 ID와 일치하는 정보를 반환합니다. 
 
-
-
-### 저작권 및 사용권 정보
-
-***
-
-
-
-### 버그 및 버전
-
-***
-
-
-
-### FAQ
-
-***
