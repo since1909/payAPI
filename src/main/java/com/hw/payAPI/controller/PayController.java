@@ -7,6 +7,7 @@ import com.hw.payAPI.exception.CostOverException;
 import com.hw.payAPI.exception.InvalidCostException;
 import com.hw.payAPI.exception.InvalidInstallmentsException;
 import com.hw.payAPI.exception.TaxOverException;
+import com.hw.payAPI.model.Cancels;
 import com.hw.payAPI.service.CancelService;
 import com.hw.payAPI.service.GetInfoService;
 import com.hw.payAPI.service.PayService;
@@ -32,11 +33,8 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.*;
 import javax.validation.Valid;
-import java.beans.MethodDescriptor;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -124,16 +122,20 @@ public class PayController {
     }
 
     @PostMapping(value = "/cancel", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String insertCancelFormReq(@ModelAttribute CancelInfoDTO cancelInfoDTO) {
+    public void insertCancelFormReq(@ModelAttribute CancelInfoDTO cancelInfoDTO, HttpServletResponse response) throws IOException {
         try{
-            return cancelService.saveCancel(cancelInfoDTO).getUnique_id();
+            Cancels data = cancelService.saveCancel(cancelInfoDTO);
+            ScriptUtil.alertAndBackPage(response, "[취소 승인] 취소가 정상적으로 완료되었습니다!\\r\\n(ID : " + data.getUnique_id() + ")");
+            return;
         } catch(CostOverException e) {
-            return e.getMessage();
+            ScriptUtil.alertAndBackPage(response, "[Error] " + e.getMessage());
+            return;
         } catch(TaxOverException e) {
-            return e.getMessage();
+            ScriptUtil.alertAndBackPage(response, "[Error] " + e.getMessage());
+            return;
         } catch (Exception e){
-            e.printStackTrace();
-            return "결제취소오류";
+            ScriptUtil.alertAndBackPage(response, "[Error] 취소 데이터를 확인하세요." + e.getMessage());
+            return;
         }
 
     }
