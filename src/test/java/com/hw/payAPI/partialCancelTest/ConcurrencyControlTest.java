@@ -45,8 +45,8 @@ public class ConcurrencyControlTest {
                 try {
                     CancelInfoDTO cancelInfo1 = new CancelInfoDTO();
                     cancelInfo1.setUnique_id(uniqueID);
-                    cancelInfo1.setCost("10");
-                    cancelInfo1.setTax(Optional.of("1"));
+                    cancelInfo1.setCancelCost("10");
+                    cancelInfo1.setCancelTax(Optional.of("1"));
                     cancelService.saveCancel(cancelInfo1);
                 } catch (Exception e) {
                     e.printStackTrace();

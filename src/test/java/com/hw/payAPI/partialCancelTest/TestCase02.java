@@ -36,21 +36,21 @@ public class TestCase02 {
         //부분취소
         CancelInfoDTO cancelInfo1 = new CancelInfoDTO();
         cancelInfo1.setUnique_id(uniqueID);
-        cancelInfo1.setCost("10000");
-        cancelInfo1.setTax(Optional.of("0"));
+        cancelInfo1.setCancelCost("10000");
+        cancelInfo1.setCancelTax(Optional.of("0"));
         cancelService.saveCancel(cancelInfo1);
 
         CancelInfoDTO cancelInfo2 = new CancelInfoDTO();
         cancelInfo2.setUnique_id(uniqueID);
-        cancelInfo2.setCost("10000");
-        cancelInfo2.setTax(Optional.ofNullable("0"));
+        cancelInfo2.setCancelCost("10000");
+        cancelInfo2.setCancelTax(Optional.ofNullable("0"));
         Throwable exception = Assertions.assertThrows(TaxOverException.class, () -> {cancelService.saveCancel(cancelInfo2);});
         Assertions.assertEquals(exception.getMessage(), "부과세를 초과한 취소 입니다.");
 
         CancelInfoDTO cancelInfo3 = new CancelInfoDTO();
         cancelInfo3.setUnique_id(uniqueID);
-        cancelInfo3.setCost("10000");
-        cancelInfo3.setTax(Optional.ofNullable("909"));
+        cancelInfo3.setCancelCost("10000");
+        cancelInfo3.setCancelTax(Optional.ofNullable("909"));
         cancelService.saveCancel(cancelInfo3);
 
     }

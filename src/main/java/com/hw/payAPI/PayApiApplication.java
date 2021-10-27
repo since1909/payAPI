@@ -24,6 +24,7 @@ public class PayApiApplication {
 
 		return sessionFactory.getObject();
 	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(PayApiApplication.class, args);
 	}
