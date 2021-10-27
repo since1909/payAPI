@@ -18,10 +18,9 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="/css/styles.css" rel="stylesheet" />
-
-
-        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
         <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+
     </head>
     <body id="page-top">
         <!-- Navigation-->
@@ -33,8 +32,7 @@
                     <ul class="navbar-nav ms-auto my-2 my-lg-0">
                         <li class="nav-item"><a class="nav-link" href="#payment">Payment</a></li>
                         <li class="nav-item"><a class="nav-link" href="#cancel">Cancel</a></li>
-                        <!--<li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>-->
+                        <li class="nav-item"><a class="nav-link" href="#search">Search</a></li>
                     </ul>
                 </div>
             </div>
@@ -65,17 +63,17 @@
                         <form id="paymentForm" action='/payment' method="post" data-sb-form-api-token="API_TOKEN">
                             <div class="mb-3">
                                 <label class="form-label text-light font-weight-bold" for="cardNum">Card Number</label>
-                                <input class="form-control" id="cardNum" name="cardNum" type="text" placeholder="Card Number" data-sb-validations="required" />
+                                <input class="form-control" id="cardNum" name="cardNum" type="text" placeholder="Card Number (10-16자리)" data-sb-validations="required" />
                                 <div class="invalid-feedback text-light" data-sb-feedback="cardNum:required">Card Number is required.</div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label text-light font-weight-bold" for="validDate">Valid Date</label>
-                                <input class="form-control" id="validDate" name="validDate" type="text" placeholder="Valid Date" data-sb-validations="required" />
+                                <input class="form-control" id="validDate" name="validDate" type="text" placeholder="Valid Date (4자리)" data-sb-validations="required" />
                                 <div class="invalid-feedback text-light" data-sb-feedback="validDate:required">Valid Date is required.</div>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label text-light font-weight-bold" for="cvc">CVC Number</label>
-                                <input class="form-control" id="cvc" name="cvc" type="text" placeholder="CVC Number" data-sb-validations="required" />
+                                <input class="form-control" id="cvc" name="cvc" type="text" placeholder="CVC Number (3자리)" data-sb-validations="required" />
                                 <div class="invalid-feedback text-light" data-sb-feedback="cvc:required">CVC Number is required.</div>
                             </div>
                             <div class="mb-3">
@@ -98,7 +96,7 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label text-light font-weight-bold" for="cost">Cost</label>
-                                <input class="form-control" id="cost" name="cost" type="text" placeholder="Cost" data-sb-validations="required" />
+                                <input class="form-control" id="cost" name="cost" type="text" placeholder="100원 이상 10억 이하만 입력 가능합니다." data-sb-validations="required" />
                                 <div class="invalid-feedback text-light" data-sb-feedback="cost:required">Cost is required.</div>
                             </div>
                             <div class="mb-3">
@@ -126,7 +124,7 @@
                         <form id="cancelForm" action='/cancel' method="post" data-sb-form-api-token="API_TOKEN">
                             <div class="mb-3">
                                 <label class="form-label text-primary font-weight-bold" for="unique_id">Pay ID</label>
-                                <input class="form-control" id="unique_id" name="unique_id" type="text" placeholder="Pay ID" data-sb-validations="required" />
+                                <input class="form-control" id="unique_id" name="unique_id" type="text" placeholder="Pay ID (20자리)" data-sb-validations="required" />
                                 <div class="invalid-feedback" data-sb-feedback="unique_id:required">Pay ID is required.</div>
                             </div>
                             <div class="mb-3">
@@ -139,16 +137,6 @@
                                 <input class="form-control" id="cancelTax" name="cancelTax" type="text" placeholder="Cancel Tax" data-sb-validations="required" />
                                 <div class="invalid-feedback" data-sb-feedback="cancelTax:required">Cancel Tax is required.</div>
                             </div>
-                            <div class="d-none" id="submitCancelSuccessMessage">
-                                <div class="text-center text-primary mb-3">
-                                    <div class="fw-bolder">Form submission successful!</div>
-                                    <p>To activate this form, sign up at</p>
-                                    <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
-                                </div>
-                            </div>
-                            <div class="d-none" id="submitCancelErrorMessage">
-                                <div class="text-center text-danger mb-3">Error sending message!</div>
-                            </div>
                             <br>
                             <div class="d-grid">
                                 <button class="btn btn-primary btn-xl" id="submitCancelButton" type="submit">Submit</button>
@@ -159,10 +147,37 @@
             </div>
         </section>
         <!-- Call to action-->
-        <section class="page-section bg-dark text-white">
-            <div class="container px-4 px-lg-5 text-center">
-                <h2 class="mb-4">Free Download at Start Bootstrap!</h2>
-                <a class="btn btn-light btn-xl" href="https://startbootstrap.com/theme/creative/">Download Now!</a>
+        <section class="page-section bg-dark text-white" id="search">
+            <div class="container px-4 my-5 text-center">
+                <div class="offset-lg-3 col-lg-6">
+                    <h4 class="mb-5">Check the Payment Information!</h4>
+                    <input class="form-control mb-4" id="searchId" type="text" placeholder="Input Pay ID"  />
+                    <button class="btn btn-light btn-xl" id="searchBtn" type="button" onclick="dataSend();">Search</button>
+                    <script>
+                        $(document).ready(function(){
+                            $("#searchBtn").click(function(){
+                                $("#exampleModalCenter").modal();
+                            });
+                        });
+
+                        function dataSend() {
+                            var uid = $("#searchId").val();
+                            $.ajax({
+                                url: "/payment/" + uid,
+                                method: "GET",
+                                dataType: "json"
+                            }).done(function(json) {
+                                alert("ID: " + json["uid"]
+                                    +'\r\nCard Number: ' + json["maskedCardNum"]
+                                    +'\r\nValid Date: ' + json["validDate"]
+                                    +'\r\nCVC: ' + json["cvc"]
+                                    +'\r\nType: ' + json["header"]
+                                    +'\r\nCost: ' + json["cost"]
+                                );
+                            });
+                        }
+                    </script>
+                </div>
             </div>
         </section>
         <!-- Footer-->
