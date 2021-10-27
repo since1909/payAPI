@@ -34,13 +34,12 @@ public class GetInfoServiceTest {
     @Test
     public void getDataTest() throws DecoderException, InvalidAlgorithmParameterException, UnsupportedEncodingException,
             NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!암호화 key 변경됨 -> 삽입된 암호화 문자열 변경 후 test 실행!!!!!!!!!!!!!!!!!!!!!!!!!!!
         //given
-        String uid = "pay20211018172253001";
+        String uid = "pay20211027233088767";
 
         Payments payInfo = new Payments();
-        payInfo.setUnique_id("pay20211018172253001");
-        payInfo.setPayStr(" 446PAYMENT   pay202110181722530011234567890123456    001021123     110000000001000                                                                                                                                                                                                                                                                                lQUrO5X3EKg1B4A8rlN%2F2SCREEqTHoXsVmccQoD3Fn8%3D                                               ");
+        payInfo.setUnique_id("pay20211027233088767");
+        payInfo.setPayStr(" 446PAYMENT   pay202110272330887671234567890123456    001125777    1100000000010000                                                                                                                                                                                                                                                                            iQZ6wIyePzA%2BA7u6diA5ENdNe%2BWvi9i2DHlFOi5tv%2Bg%3D                                               ");
 
         given(payMapper.getPayInfo(uid)).willReturn(payInfo);
 
@@ -49,7 +48,7 @@ public class GetInfoServiceTest {
 
         //then
         Assertions.assertEquals(getInfoDTO.getMaskedCardNum(), "123456*******456");
-        Assertions.assertEquals(getInfoDTO.getValidDate(), "1021");
-        Assertions.assertEquals(getInfoDTO.getCvc(), "123");
+        Assertions.assertEquals(getInfoDTO.getValidDate(), "1125");
+        Assertions.assertEquals(getInfoDTO.getCvc(), "777");
     }
 }
