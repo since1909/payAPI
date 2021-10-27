@@ -19,12 +19,12 @@ public class PayApiApplication {
 		SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
 		sessionFactory.setDataSource(dataSource);
 
-		Resource[] res
-				= new PathMatchingResourcePatternResolver().getResources("classpath:mapper/**/*.xml");
+		Resource[] res = new PathMatchingResourcePatternResolver().getResources("classpath:mapper/**/*.xml");
 		sessionFactory.setMapperLocations(res);
 
 		return sessionFactory.getObject();
 	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(PayApiApplication.class, args);
 	}

@@ -1,8 +1,6 @@
 package com.hw.payAPI.service;
 
 import com.hw.payAPI.dto.CancelInfoDTO;
-import com.hw.payAPI.exception.CostOverException;
-import com.hw.payAPI.exception.TaxOverException;
 import com.hw.payAPI.mapper.PayMapper;
 import com.hw.payAPI.model.Cancels;
 import com.hw.payAPI.model.Payments;
@@ -12,16 +10,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.testng.asserts.Assertion;
 
 import java.util.Optional;
 
-import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.given;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -38,13 +31,13 @@ public class CancelServiceTest {
     public void saveCancel() {
         //given
         CancelInfoDTO cancelInfoDTO = new CancelInfoDTO();
-        cancelInfoDTO.setUnique_id("pay20211018172253001");
-        cancelInfoDTO.setCost("11000");
-        cancelInfoDTO.setTax(Optional.ofNullable("1000"));
+        cancelInfoDTO.setUnique_id("pay20211027233088767");
+        cancelInfoDTO.setCancelCost("11000");
+        cancelInfoDTO.setCancelTax(Optional.ofNullable("1000"));
 
         Payments payInfo = new Payments();
-        payInfo.setPayStr(" 446PAYMENT   pay202110181722530011234567890123456    001021123     110000000001000                                                                                                                                                                                                                                                                                lQUrO5X3EKg1B4A8rlN%2F2SCREEqTHoXsVmccQoD3Fn8%3D                                               ");
-        payInfo.setUnique_id("pay20211018172253001");
+        payInfo.setPayStr(" 446PAYMENT   pay202110272330887671234567890123456    001125777    1100000000010000                                                                                                                                                                                                                                                                            iQZ6wIyePzA%2BA7u6diA5ENdNe%2BWvi9i2DHlFOi5tv%2Bg%3D                                               ");
+        payInfo.setUnique_id("pay20211027233088767");
         given(payMapper.getPayments(cancelInfoDTO.getUnique_id())).willReturn(payInfo);
 
         //when
@@ -65,8 +58,8 @@ public class CancelServiceTest {
         Assertions.assertEquals("CANCEL    ", headerFlag);
         Assertions.assertEquals("1234567890123456    ", cardNum);
         Assertions.assertEquals("00", installments);
-        Assertions.assertEquals("1021", validDate);
-        Assertions.assertEquals("123", cvc);
+        Assertions.assertEquals("1125", validDate);
+        Assertions.assertEquals("777", cvc);
         Assertions.assertEquals("     11000", cost);
         Assertions.assertEquals("0000001000", tax);
 
@@ -77,13 +70,13 @@ public class CancelServiceTest {
     public void whenTaxNull() {
         //given
         CancelInfoDTO cancelInfoDTO = new CancelInfoDTO();
-        cancelInfoDTO.setUnique_id("pay20211018172253001");
-        cancelInfoDTO.setCost("11000");
-        cancelInfoDTO.setTax(Optional.ofNullable(null));
+        cancelInfoDTO.setUnique_id("pay20211027233088767");
+        cancelInfoDTO.setCancelCost("11000");
+        cancelInfoDTO.setCancelTax(Optional.ofNullable(null));
 
         Payments payInfo = new Payments();
-        payInfo.setPayStr(" 446PAYMENT   pay202110181722530011234567890123456    001021123     110000000001000                                                                                                                                                                                                                                                                                lQUrO5X3EKg1B4A8rlN%2F2SCREEqTHoXsVmccQoD3Fn8%3D                                               ");
-        payInfo.setUnique_id("pay20211018172253001");
+        payInfo.setPayStr(" 446PAYMENT   pay202110272330887671234567890123456    001125777    1100000000010000                                                                                                                                                                                                                                                                            iQZ6wIyePzA%2BA7u6diA5ENdNe%2BWvi9i2DHlFOi5tv%2Bg%3D                                               ");
+        payInfo.setUnique_id("pay20211027233088767");
         given(payMapper.getPayments(cancelInfoDTO.getUnique_id())).willReturn(payInfo);
 
         //when

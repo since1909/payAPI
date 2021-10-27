@@ -84,14 +84,4 @@ class PayServiceTest {
         Assertions.assertEquals("0000010000", payStr.substring(73, 83));
     }
 
-
-
-//    @Test
-//    public void saveCancel() {
-//        Payments payDta = new Payments();
-//        payDta.setUnique_id("pay20211019134619001");
-//        payDta.
-//
-//        Payments cancelData = payTestService.makeCancelStr(cancelInfoDTO);
-//    }
 }

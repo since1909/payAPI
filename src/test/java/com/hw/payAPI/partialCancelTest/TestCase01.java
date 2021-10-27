@@ -46,40 +46,40 @@ public class TestCase01 {
         //부분취소
         CancelInfoDTO cancelInfo1 = new CancelInfoDTO();
         cancelInfo1.setUnique_id(uniqueID);
-        cancelInfo1.setCost("1100");
-        cancelInfo1.setTax(Optional.of("100"));
+        cancelInfo1.setCancelCost("1100");
+        cancelInfo1.setCancelTax(Optional.of("100"));
         cancelService.saveCancel(cancelInfo1);
 
         CancelInfoDTO cancelInfo2 = new CancelInfoDTO();
         cancelInfo2.setUnique_id(uniqueID);
-        cancelInfo2.setCost("3300");
-        cancelInfo2.setTax(Optional.ofNullable(null));
+        cancelInfo2.setCancelCost("3300");
+        cancelInfo2.setCancelTax(Optional.ofNullable(null));
         cancelService.saveCancel(cancelInfo2);
 
         CancelInfoDTO cancelInfo3 = new CancelInfoDTO();
         cancelInfo3.setUnique_id(uniqueID);
-        cancelInfo3.setCost("7000");
-        cancelInfo3.setTax(Optional.ofNullable(null));
+        cancelInfo3.setCancelCost("7000");
+        cancelInfo3.setCancelTax(Optional.ofNullable(null));
         Throwable exception = Assertions.assertThrows(CostOverException.class, () -> {cancelService.saveCancel(cancelInfo3);});
         Assertions.assertEquals(exception.getMessage(), "결제 금액을 초과한 취소 입니다.");
 
         CancelInfoDTO cancelInfo4 = new CancelInfoDTO();
         cancelInfo4.setUnique_id(uniqueID);
-        cancelInfo4.setCost("6600");
-        cancelInfo4.setTax(Optional.ofNullable("700"));
+        cancelInfo4.setCancelCost("6600");
+        cancelInfo4.setCancelTax(Optional.ofNullable("700"));
         Throwable exception2 = Assertions.assertThrows(TaxOverException.class, () -> {cancelService.saveCancel(cancelInfo4);});
         Assertions.assertEquals(exception2.getMessage(), "부과세를 초과한 취소 입니다.");
 
         CancelInfoDTO cancelInfo5 = new CancelInfoDTO();
         cancelInfo5.setUnique_id(uniqueID);
-        cancelInfo5.setCost("6600");
-        cancelInfo5.setTax(Optional.ofNullable("600"));
+        cancelInfo5.setCancelCost("6600");
+        cancelInfo5.setCancelTax(Optional.ofNullable("600"));
         cancelService.saveCancel(cancelInfo5);
 
         CancelInfoDTO cancelInfo6 = new CancelInfoDTO();
         cancelInfo6.setUnique_id(uniqueID);
-        cancelInfo6.setCost("100");
-        cancelInfo6.setTax(Optional.ofNullable(null));
+        cancelInfo6.setCancelCost("100");
+        cancelInfo6.setCancelTax(Optional.ofNullable(null));
         Throwable exception3 = Assertions.assertThrows(CostOverException.class, () -> {cancelService.saveCancel(cancelInfo6);});
         Assertions.assertEquals(exception3.getMessage(), "결제 금액을 초과한 취소 입니다.");
 
