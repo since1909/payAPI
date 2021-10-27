@@ -35,9 +35,9 @@
 테스트 페이지  
 
 <p align="left">
-<img src="https://user-images.githubusercontent.com/37170306/139022241-903269c2-21bf-4472-824d-0f9d29c02eb9.png" width="200"/>
-<img src="https://user-images.githubusercontent.com/37170306/139022304-f814db46-a23e-4835-9ab7-f6e27ceba0b5.png" width="250"/>
-<img src="https://user-images.githubusercontent.com/37170306/139022023-3773fe41-f464-48bb-856c-47ae43e251ff.png" width="250"/>
+<img src="https://user-images.githubusercontent.com/37170306/139022241-903269c2-21bf-4472-824d-0f9d29c02eb9.png" width="250"/>
+<img src="https://user-images.githubusercontent.com/37170306/139022304-f814db46-a23e-4835-9ab7-f6e27ceba0b5.png" width="300"/>
+<img src="https://user-images.githubusercontent.com/37170306/139022023-3773fe41-f464-48bb-856c-47ae43e251ff.png" width="300"/>
 </p>
 
 
