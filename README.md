@@ -17,7 +17,7 @@
 + jQuery
 
   
-#
+
 ### 프로젝트 구성
 
 ***
@@ -31,12 +31,12 @@
 
 + 결제/취소 정보 조회
 #
-#
+
 Class Diagram
 
 ![payAPI](https://user-images.githubusercontent.com/37170306/139219445-c9977576-b388-446d-a79b-b4d0dfaaa03c.png)
 
-#
+
 #
 
 
