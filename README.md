@@ -12,7 +12,7 @@
 
 + PostgreSQL
 
-+ Bootstrap
+
 
 + jQuery
 
@@ -30,6 +30,10 @@
   + 부분 취소 요청
 
 + 결제/취소 정보 조회
+
++ UML
+![payAPI](https://user-images.githubusercontent.com/37170306/139219445-c9977576-b388-446d-a79b-b4d0dfaaa03c.png)
+
 
   
 테스트 페이지  
