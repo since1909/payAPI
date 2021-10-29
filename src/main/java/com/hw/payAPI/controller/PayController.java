@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -69,7 +70,6 @@ public class PayController {
         }
     }
 
-
     @PostMapping(value = "/payment", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public void insertPayStrFormReq(@Valid @ModelAttribute PayInfoDTO payInfoDTO,  BindingResult bindingResult, HttpServletResponse response) throws IOException {
         response.setContentType("text/html; charset=euc-kr");
@@ -87,7 +87,7 @@ public class PayController {
 
         try {
             String uid = payService.savePayStr(payInfoDTO);
-            ScriptUtil.alertAndBackPage(response, "[결제 승인] 결제가 정상적으로 완료되었습니다!\\r\\n(ID : " + uid + ")");
+            ScriptUtil.alertAndBackPage(response, "[결제 승인] : " + uid);
             return;
         } catch (InvalidCostException e) {
            ScriptUtil.alertAndBackPage(response, "[Error] " + e.getMessage());
