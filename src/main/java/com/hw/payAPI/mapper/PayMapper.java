@@ -1,14 +1,10 @@
 package com.hw.payAPI.mapper;
 
-import com.hw.payAPI.dto.CancelInfoDTO;
-import com.hw.payAPI.model.Cancels;
-import com.hw.payAPI.model.Payments;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
+import com.hw.payAPI.model.Cancels;
+import com.hw.payAPI.model.Payments;
 
 @Mapper
 public interface PayMapper {

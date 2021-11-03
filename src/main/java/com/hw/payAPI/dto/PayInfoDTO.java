@@ -1,13 +1,13 @@
 package com.hw.payAPI.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
+import java.util.Optional;
+
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.validation.constraints.Size;
-import java.util.Optional;
+import lombok.Data;
 
 @Data
 public class PayInfoDTO {
