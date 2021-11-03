@@ -1,7 +1,6 @@
 package com.hw.payAPI.model;
 
 import lombok.Data;
-import org.springframework.stereotype.Repository;
 
 @Data
 public class Payments {
