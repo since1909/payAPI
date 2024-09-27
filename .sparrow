@@ -1,4 +1,4 @@
 sastOption:  
   excludePath:  
-    - path1  
-    - path2 
+    - *src/test/java/com/hw/payAPI/*
+    - *src/test/*
