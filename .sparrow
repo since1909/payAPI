@@ -1,0 +1,4 @@
+sastOption:  
+  excludePath:  
+    - path1  
+    - path2 
