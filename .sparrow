@@ -1,3 +1,3 @@
 sastOption:  
   excludedPath:  
-    - "*\\partialcanceltest*"
+    - "*\partialcanceltest*"
