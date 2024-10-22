@@ -1,4 +1,4 @@
 sastOption:  
   excludedPath:  
     - "src/test*"
-    - "*/resources/application.properties"
+    # - "*/resources/application.properties"
